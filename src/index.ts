@@ -23,6 +23,7 @@ export class AclService {
      * @returns {boolean}
      */
     roleHasAbilities(role) {
+        this.resume();
         return (typeof this.data.abilities[role] === 'object');
     }
 
@@ -33,6 +34,7 @@ export class AclService {
      * @returns {Array}
      */
     getRoleAbilities(role) {
+        this.resume();
         return (this.roleHasAbilities(role)) ? this.data.abilities[role] : [];
     }
 
@@ -70,6 +72,7 @@ export class AclService {
      * @param role
      */
     attachRole(role) {
+        this.resume();
         if (this.data.roles.indexOf(role) === -1) {
             this.data.roles.push(role);
             this.save();
@@ -82,6 +85,7 @@ export class AclService {
      * @param role
      */
     detachRole(role) {
+        this.resume();
         var i = this.data.roles.indexOf(role);
         if (i > -1) {
             this.data.roles.splice(i, 1);
@@ -93,6 +97,7 @@ export class AclService {
      * Remove all roles from current user
      */
     flushRoles() {
+        this.resume();
         this.data.roles = [];
         this.save();
     }
@@ -104,6 +109,7 @@ export class AclService {
      * @returns {boolean}
      */
     hasRole(role) {
+        this.resume();
         return (this.data.roles.indexOf(role) > -1);
     }
 
@@ -112,6 +118,7 @@ export class AclService {
      * @returns {Array}
      */
     getRoles() {
+        this.resume();
         return this.data.roles;
     }
 
@@ -133,6 +140,7 @@ export class AclService {
      * @param abilities
      */
     setAbilities(abilities) {
+        this.resume();
         this.data.abilities = abilities;
         this.save();
     }
@@ -144,6 +152,7 @@ export class AclService {
      * @param ability
      */
     addAbility(role, ability) {
+        this.resume();
         if (!this.data.abilities[role]) {
             this.data.abilities[role] = [];
         }
@@ -160,6 +169,7 @@ export class AclService {
      * @param [force] - force add or remove
      */
     toggleAbility(role, ability, force) {
+        this.resume();
         var roles = role ? [role] : this.data.roles;
 
         // Loop through roles
@@ -200,6 +210,7 @@ export class AclService {
      * @returns {boolean}
      */
     can(ability) {
+        this.resume();
         var role, abilities;
         // Loop through roles
         var l = this.data.roles.length;
@@ -223,6 +234,7 @@ export class AclService {
      * @returns {boolean}
      */
     canAny(abilities) {
+        this.resume();
         var role, roleAbilities;
         // Loop through roles
         var l = this.data.roles.length;
