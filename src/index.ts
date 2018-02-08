@@ -38,6 +38,33 @@ export class AclService {
         return (this.roleHasAbilities(role)) ? this.data.abilities[role] : [];
     }
 
+    /**
+     * Restore data from web storage.
+     *
+     * Returns true if web storage exists and false if it doesn't.
+     *
+     * @returns {boolean}
+     */
+    resume() {
+        var storedData;
+
+        switch (this.config.storage) {
+            case 'sessionStorage':
+                storedData = this.fetchFromStorage('sessionStorage');
+                break;
+            case 'localStorage':
+                storedData = this.fetchFromStorage('localStorage');
+                break;
+            default:
+                storedData = null;
+        }
+        if (storedData) {
+            _.extend(this.data, storedData);
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Attach a role to the current user
@@ -183,7 +210,7 @@ export class AclService {
      * @returns {boolean}
      */
     can(ability) {
-        this.resume();
+        // this.resume();
         var role, abilities;
         // Loop through roles
         var l = this.data.roles.length;
@@ -207,7 +234,7 @@ export class AclService {
      * @returns {boolean}
      */
     canAny(abilities) {
-        this.resume();
+        // this.resume();
         var role, roleAbilities;
         // Loop through roles
         var l = this.data.roles.length;
@@ -226,34 +253,6 @@ export class AclService {
             }
         }
         // We made it here, so the ability wasn't found in attached roles
-        return false;
-    }
-
-    /**
-     * Restore data from web storage.
-     *
-     * Returns true if web storage exists and false if it doesn't.
-     *
-     * @returns {boolean}
-     */
-    private resume() {
-        var storedData;
-
-        switch (this.config.storage) {
-            case 'sessionStorage':
-                storedData = this.fetchFromStorage('sessionStorage');
-                break;
-            case 'localStorage':
-                storedData = this.fetchFromStorage('localStorage');
-                break;
-            default:
-                storedData = null;
-        }
-        if (storedData) {
-            _.extend(this.data, storedData);
-            return true;
-        }
-
         return false;
     }
 
