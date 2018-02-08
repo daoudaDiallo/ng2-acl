@@ -210,7 +210,7 @@ export class AclService {
      * @returns {boolean}
      */
     can(ability) {
-        // this.resume();
+        this.resume();
         var role, abilities;
         // Loop through roles
         var l = this.data.roles.length;
@@ -234,7 +234,7 @@ export class AclService {
      * @returns {boolean}
      */
     canAny(abilities) {
-        // this.resume();
+        this.resume();
         var role, roleAbilities;
         // Loop through roles
         var l = this.data.roles.length;
