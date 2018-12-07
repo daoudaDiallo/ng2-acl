@@ -1,9 +1,21 @@
 import * as _ from 'lodash';
+import { createStore } from 'redux';
+const storageI = (state = 'localStorage', action) => {
+    switch(action.type) {
+        case 'localStorage':
+            return 'localStorage';
+        case 'sessionStorage':
+            return 'sessionStorage';
+        default:
+            return state;
+    }
+};
+
+const store = createStore(storageI);
 
 export class AclService {
 
     config = {
-        // @TODO: To refactor ASAP by adding Redux store
         storage: 'localStorage',
         storageKey: 'AclService'
     };
@@ -14,6 +26,11 @@ export class AclService {
     };
 
     constructor() {
+        const render = () => {
+            this.config.storage = store.getState();
+        };
+        render();
+        store.subscribe(render);
     }
 
     /**
@@ -25,6 +42,13 @@ export class AclService {
     roleHasAbilities(role) {
         this.resume();
         return (typeof this.data.abilities[role] === 'object');
+    }
+    /**
+     *
+     * @param type
+     */
+    setStorageType(type) {
+        store.dispatch({type: type});
     }
 
     /**
