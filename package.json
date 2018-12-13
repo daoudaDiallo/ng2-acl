@@ -9,10 +9,10 @@
     "typings": "typings install"
   },
   "dependencies": {
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
-    "redux": "^4.0.1"
   },
   "repository": {
     "type": "git",
